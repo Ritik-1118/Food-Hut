@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import Header from "../../components/header";
 import Recommended from "../../components/recommandFood";
 import Special from "../../components/special";
-import Footer from "../../shared/footer";
-import Loader from "../../shared/loader.";
+import Hero from "../../components/Hero";
+import SkeletonLayout from "../../shared/SkeletonLayout";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,23 +17,13 @@ const Home = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  if (isLoading) return <SkeletonLayout type="list" />;
+
   return (
     <section>
-        <Header />
-      {isLoading ? (
-        // Loader component while data is being fetched
-        <div className="">
-          {" "}
-          <Loader />
-        </div>
-      ) : (
-        // Render components after data is fetched
-        <>
-         <Recommended />
-        </>
-      )}
-        
-       <Special />
+        <Hero />
+        <Recommended />
+        <Special />
     </section>
   );
 };

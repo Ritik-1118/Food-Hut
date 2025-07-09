@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
 import ProductDetailsCarousel from "../../components/ProductDetailsCarousel.jsx";
 import { FaCartArrowDown } from "react-icons/fa";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance.js";
 import { useEffect, useState } from "react";
 import { UserCart } from "../../store/card.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Loader from "../../shared/loader..jsx";
+import SkeletonLayout from "../../shared/SkeletonLayout";
 
 const ProductDetails = () => {
   const { addToCart } = UserCart();
@@ -16,8 +16,8 @@ const ProductDetails = () => {
 
   const getBYid = async () => {
     try {
-      const response = await axios.get(
-        `https://foodhut-d4sp.onrender.com/food/find/${id}`
+      const response = await axiosInstance.get(
+        `/food/find/${id}`
       );
       setData(response.data);
       setLoading(false);
@@ -41,7 +41,7 @@ const ProductDetails = () => {
   return (
     <>
       {loading ? (
-        <Loader />
+        <SkeletonLayout type="product" />
       ) : (
         <section className="py-3 px-10 sm:px-6 lg:px-6">
           <div className="container mx-auto py-[14vh]">

@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
+import PropTypes from "prop-types";
 
 export const AuthContext = createContext();
 
@@ -29,33 +30,23 @@ export const Authprovider = ({ children }) => {
   // JWt verification
   const userAuthentication = async () => {
     try {
-      const response = await fetch(
-        "https://foodhut-d4sp.onrender.com/auth/user",
-        {
-          method: "GET",
-          headers: {
-            Authorization: autheader,
-          },
-        }
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setUserData(data);
-        setuser(data.userdata);
-        setLoading(false);
-      } else {
-        setLoading(false);
-      }
-    } catch (error) {}
+      const response = await axiosInstance.get("/auth/user", {
+        headers: {
+          Authorization: autheader,
+        },
+      });
+      setUserData(response.data);
+      setuser(response.data.userdata);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
   const getFood = async () => {
     try {
-      const response = await axios.get(
-        "https://foodhut-d4sp.onrender.com/food",
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axiosInstance.get("/food", {
+        withCredentials: true,
+      });
       setFood(response.data);
     } catch (error) {
       console.log(error);
@@ -82,6 +73,10 @@ export const Authprovider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+Authprovider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export const useAuth = () => {

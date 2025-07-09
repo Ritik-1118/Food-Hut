@@ -5,10 +5,11 @@ import { useAuth } from "../store/auth";
 import { UserCart } from "../store/card";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "./loader";
 const Card = ({ food }) => {
   const { addToCart } = UserCart();
   if (!food) {
-    return <p>Loading...</p>;
+    return <Loader />;
   }
   const handleAddToCart = (currElem) => {
     toast("Cart Added Succesfully");
