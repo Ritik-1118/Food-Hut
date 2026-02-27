@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["https://foodyhut.vercel.app","http://localhost:5173"],
+    origin: ["https://foodyhut.vercel.app","http://localhost:5173","https://food-hut-nine.vercel.app"],
     methods: "GET,POST,DELETE,PUT",
     credentials: true,
   })
