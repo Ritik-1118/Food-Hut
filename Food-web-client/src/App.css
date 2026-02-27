@@ -1,35 +1,24 @@
 body {
-  font-family: "Sofia Sans", sans-serif;
-  background: linear-gradient(180deg,
-      rgba(71, 245, 225, 0.216) 0%,
-      rgba(71, 245, 222, 0) 100%);
-  background-size: cover;
+  font-family: "DM Sans", system-ui, sans-serif;
+  background-color: #f8fafc;
 }
 
-/* Fix SweetAlert2 button visibility */
-.swal2-confirm,
-.swal2-cancel,
-.swal2-deny {
-  color: #fff !important;
-  background: #f58a47 !important;
-  /* or SweetAlert2's default blue/gray if you prefer */
-  border: none !important;
-  box-shadow: none !important;
-  filter: none !important;
+/* SweetAlert2 — minimal brand overrides (used for destructive confirms only) */
+.swal2-confirm {
+  background-color: #f97316 !important;
+  border-radius: 0.75rem !important;
+  font-weight: 600 !important;
 }
-
 .swal2-cancel {
-  background: #b0b0b0 !important;
+  background-color: #e2e8f0 !important;
+  color: #334155 !important;
+  border-radius: 0.75rem !important;
+  font-weight: 600 !important;
 }
+.swal2-confirm:hover { filter: brightness(0.95) !important; }
+.swal2-cancel:hover  { filter: brightness(0.95) !important; }
 
-.swal2-confirm:hover,
-.swal2-cancel:hover,
-.swal2-deny:hover {
-  filter: brightness(0.95) !important;
-}
-
-/* button css */
-
+/* Legacy .btn — used by shared/card.jsx. Will be replaced in Phase 2. */
 .btn {
   width: 140px;
   height: 50px;
@@ -70,7 +59,6 @@ body {
 .btn:active .btn-text-one {
   top: -100%;
   background: linear-gradient(#07c8cb, #0b7c90, #09596c, 0.64);
-
   animation-duration: 2s;
 }
 
@@ -165,88 +153,4 @@ body {
   }
 }
 
-/* Loader css */
-.loader {
-  transform: rotateZ(45deg);
-  /* perspective: 1024px; */
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  color: #08bbd7;
-}
-
-.loader:before,
-.loader:after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: inherit;
-  height: inherit;
-  border-radius: 50%;
-  transform: rotateX(70deg);
-  animation: 1s spin linear infinite;
-}
-
-.loader:after {
-  color: #d15b37;
-  transform: rotateY(70deg);
-  animation-delay: 0.4s;
-}
-
-@keyframes rotate {
-  0% {
-    transform: translate(-50%, -50%) rotateZ(0deg);
-  }
-
-  100% {
-    transform: translate(-50%, -50%) rotateZ(360deg);
-  }
-}
-
-@keyframes rotateccw {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-
-  100% {
-    transform: translate(-50%, -50%) rotate(-360deg);
-  }
-}
-
-@keyframes spin {
-
-  0%,
-  100% {
-    box-shadow: 0.2em 0px 0 0px currentcolor;
-  }
-
-  12% {
-    box-shadow: 0.2em 0.2em 0 0 currentcolor;
-  }
-
-  25% {
-    box-shadow: 0 0.2em 0 0px currentcolor;
-  }
-
-  37% {
-    box-shadow: -0.2em 0.2em 0 0 currentcolor;
-  }
-
-  50% {
-    box-shadow: -0.2em 0 0 0 currentcolor;
-  }
-
-  62% {
-    box-shadow: -0.2em -0.2em 0 0 currentcolor;
-  }
-
-  75% {
-    box-shadow: 0px -0.2em 0 0 currentcolor;
-  }
-
-  87% {
-    box-shadow: 0.2em -0.2em 0 0 currentcolor;
-  }
-}
+/* Dead loader CSS removed — loader.jsx uses SVG spinner */

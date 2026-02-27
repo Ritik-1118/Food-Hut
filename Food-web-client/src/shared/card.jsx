@@ -3,8 +3,7 @@ import { NavLink } from "react-router-dom";
 import { MdOutlineStarRate } from "react-icons/md";
 import { useAuth } from "../store/auth";
 import { UserCart } from "../store/card";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "sonner";
 import Loader from "./loader";
 const Card = ({ food }) => {
   const { addToCart } = UserCart();
@@ -17,7 +16,6 @@ const Card = ({ food }) => {
   };
   return (
     <div className="flex flex-wrap    justify-center ">
-      <ToastContainer />
       {food.map((currElem, index) => {
         const { title, rating, price, foodImg, description, _id } = currElem;
         return (

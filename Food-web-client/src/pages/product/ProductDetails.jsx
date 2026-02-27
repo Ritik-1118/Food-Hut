@@ -4,8 +4,7 @@ import { FaCartArrowDown } from "react-icons/fa";
 import axiosInstance from "../../utils/axiosInstance.js";
 import { useEffect, useState } from "react";
 import { UserCart } from "../../store/card.jsx";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "sonner";
 import SkeletonLayout from "../../shared/SkeletonLayout";
 
 const ProductDetails = () => {
@@ -45,19 +44,6 @@ const ProductDetails = () => {
       ) : (
         <section className="py-3 px-10 sm:px-6 lg:px-6">
           <div className="container mx-auto py-[14vh]">
-            <ToastContainer
-              position="top-center"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="dark"
-              transition:Bounce
-            />
             <div className="w-full max-w-[1280px] px-5 md:px-10 mx-auto text-gray-800 md:py-20">
               <div className="flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px]">
                 {/* left column start */}
