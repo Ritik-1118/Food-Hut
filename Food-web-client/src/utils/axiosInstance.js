@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://foodhut-d4sp.onrender.com",
+  // baseURL: "https://foodhut-d4sp.onrender.com",
+  baseURL: "https://food-hut-pjq7.onrender.com",
   // baseURL: "http://localhost:8001",
   headers: {
     "Content-Type": "application/json",
