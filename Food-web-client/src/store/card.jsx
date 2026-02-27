@@ -1,12 +1,26 @@
-import React, { createContext, useContext, useReducer, useState } from "react";
+import React, { createContext, useContext, useEffect, useReducer } from "react";
 
 const CartContext = createContext();
 
-const initialState = {
-    cart: [],
-    count: 0,
-    itemcount: 0,
+// Hydrate initial state from localStorage if available
+const loadCartFromStorage = () => {
+    try {
+        const stored = localStorage.getItem("foodhunt_cart");
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            return {
+                cart: parsed.cart || [],
+                count: parsed.count || 0,
+                itemcount: parsed.itemcount || 0,
+            };
+        }
+    } catch (e) {
+        console.warn("Failed to load cart from localStorage", e);
+    }
+    return { cart: [], count: 0, itemcount: 0 };
 };
+
+const initialState = loadCartFromStorage();
 
 const reducer = ( state, action ) => {
     switch ( action.type ) {
@@ -91,6 +105,15 @@ const reducer = ( state, action ) => {
 
 const CartProvider = ( { children } ) => {
     const [ state, dispatch ] = useReducer( reducer, initialState );
+
+    // Persist cart to localStorage on every state change
+    useEffect( () => {
+        try {
+            localStorage.setItem("foodhunt_cart", JSON.stringify(state));
+        } catch (e) {
+            console.warn("Failed to save cart to localStorage", e);
+        }
+    }, [ state ] );
 
     const addToCart = ( data ) => {
         dispatch( { type: "ADD_TO_CART", payload: { data } } );

@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../store/auth";
 import { NavLink } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "./registration.css";
+import { toast } from "sonner";
 import axiosInstance from "../../utils/axiosInstance";
 import Loader from "../../shared/loader";
 
@@ -62,7 +60,6 @@ const Login = () => {
   return (
     <section className="min-h-screen flex items-center justify-center py-16 px-4">
       <div className="container mx-auto flex items-center justify-center">
-        <ToastContainer />
         <div className="w-full max-w-md bg-white/90 rounded-3xl shadow-2xl p-10 flex flex-col items-center border-t-8 border-orange-400">
           <div className="mb-8 text-center">
             <h2 className="text-4xl font-extrabold text-[#09596c] mb-2 drop-shadow-lg">Welcome Back!</h2>
