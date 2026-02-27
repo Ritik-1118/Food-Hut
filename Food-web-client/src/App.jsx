@@ -14,7 +14,7 @@ import Register from "./pages/registration/register";
 import Profile from "./pages/profile/profile";
 import Success from "./pages/paymentResult/success";
 import Cancel from "./pages/paymentResult/cancel";
-import Error404 from "./pages/404/error404";
+import Error404 from "./pages/404/Error404";
 import ProtectedLayout from "./shared/ProtectedLayout";
 import PageWrapper from "./shared/PageWrapper";
 
