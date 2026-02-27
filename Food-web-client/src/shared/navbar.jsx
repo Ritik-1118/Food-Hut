@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../assets/Logo.png";
 import Swal from "sweetalert2";
 import { TiThMenu } from "react-icons/ti";
@@ -36,9 +36,24 @@ const Navbar = () => {
     setNav( !nav );
   };
 
+  useEffect( () => {
+    document.body.style.overflow = nav ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [ nav ] );
+
+  useEffect( () => {
+    const onEscape = ( event ) => {
+      if ( event.key === "Escape" ) setNav( false );
+    };
+    window.addEventListener( "keydown", onEscape );
+    return () => window.removeEventListener( "keydown", onEscape );
+  }, [] );
+
   return (
-    <nav className="sticky top-0 left-0 w-full z-50 bg-white/80 shadow-lg backdrop-blur-md transition-all duration-300">
-      <div className="py-3 px-10 md:px-16 lg:px-6 container mx-auto flex items-center justify-between">
+    <nav className="sticky top-0 left-0 w-full z-50 bg-white/80 shadow-lg backdrop-blur-md transition-all duration-300 overflow-x-clip">
+      <div className="py-3 px-4 sm:px-6 md:px-10 lg:px-6 container mx-auto flex items-center justify-between">
         {/* Logo */ }
         <NavLink to="/" className="flex items-center gap-2 group">
           <img src={ logo } alt="FoodHunt Logo" className="h-14 w-auto drop-shadow-md transition-transform duration-200 group-hover:scale-105" />
@@ -106,18 +121,35 @@ const Navbar = () => {
           ) }
         </div>
         {/* Mobile Nav Toggle */ }
-        <div className="block lg:hidden z-40" onClick={ handleNav }>
+        <button
+          type="button"
+          aria-label={ nav ? "Close menu" : "Open menu" }
+          aria-expanded={ nav }
+          className="block lg:hidden z-[60]"
+          onClick={ handleNav }
+        >
           { nav ? (
             <LuUtensilsCrossed size={ 28 } className="text-[#191919] cursor-pointer transition-transform duration-200 hover:scale-110" />
           ) : (
             <TiThMenu size={ 28 } className="text-blue-500 cursor-pointer transition-transform duration-200 hover:scale-110" />
           ) }
-        </div>
+        </button>
+        <div
+          className={ `fixed inset-0 z-40 bg-black/45 transition-opacity duration-300 lg:hidden ${nav ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}` }
+          onClick={ () => setNav( false ) }
+          aria-hidden="true"
+        />
         {/* Mobile Nav Drawer */ }
         <div
-          className={ `absolute w-3/4 sm:w-2/5 h-screen py-2 px-4 text-xl font-medium ease-in shadow-lg backdrop-blur-md bg-white/95 top-0 duration-200 ${nav ? "right-0" : "right-[-100%]"} pt-24 z-50 rounded-l-3xl border-l-4 border-[#07c8cb]` }
+          className={ `fixed inset-y-0 right-0 z-50 h-screen w-full max-w-full bg-white backdrop-blur-md transform transition-transform duration-300 ease-in-out overflow-y-auto overscroll-contain lg:hidden ${nav ? "translate-x-0" : "translate-x-full invisible"}` }
         >
-          <div className="flex flex-col gap-8 items-center">
+          <div className="sticky top-0 z-10 flex items-center justify-between border-b border-surface-200 bg-white px-6 py-5">
+            <span className="text-xl font-semibold text-[#191919]">Menu</span>
+            <button type="button" aria-label="Close menu" className="text-[#191919] p-1" onClick={ () => setNav( false ) }>
+              <LuUtensilsCrossed size={ 28 } className="cursor-pointer transition-transform duration-200 hover:scale-110" />
+            </button>
+          </div>
+          <div className="flex flex-col gap-8 items-start px-6 pt-8 pb-10">
             <NavLink
               to="/"
               className="flex flex-row items-center gap-2 text-[#191919] text-lg font-medium hover:text-blue-500"
@@ -152,7 +184,7 @@ const Navbar = () => {
               ) }
             </NavLink>
             { islogin ? (
-              <div className="flex flex-col gap-6 items-center">
+              <div className="flex flex-col gap-6 items-start w-full">
                 <NavLink to="/profile" onClick={ () => setNav( false ) }>
                   <button className="flex flex-row items-center gap-2 text-[#f58a47] bg-white/10 shadow-lg rounded-full px-6 py-2 text-lg font-medium transition-transform duration-150 hover:scale-105 active:scale-95 focus:outline-none">
                     <CgProfile /> Profile
@@ -160,7 +192,10 @@ const Navbar = () => {
                 </NavLink>
                 <button
                   className="bg-[#f58a47] rounded-full text-white shadow-lg px-8 py-2 text-lg font-medium transition-transform duration-150 hover:scale-105 active:scale-95 focus:outline-none"
-                  onClick={ Logout }
+                  onClick={ () => {
+                    setNav( false );
+                    Logout();
+                  } }
                 >
                   Logout
                 </button>
